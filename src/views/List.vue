@@ -32,7 +32,7 @@
           <ion-icon class="trash" name="trash"
             @mouseenter="$event.target.style.color = '#999'"
             @mouseleave="$event.target.style.color = '#ddd'"
-            @click.prevent="() => deleteTask(index)"
+            @click.prevent="() => deleteTask(id)"
           ></ion-icon>
         </h2>
       </router-link>
@@ -76,10 +76,6 @@ export default {
     submitHandler() {
       const title = this.title
       const todos = this.todos
-      console.log(title, '--->')
-      console.log(todos, '--->')
-      console.log(this.$parent.$data) 
-          
       this.$parent.$data.base.push({ title, todos })
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
       this.title=''
