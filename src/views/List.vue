@@ -6,11 +6,14 @@
 
     <!-- List -->
     <form v-for="(value, id) in $parent.$data.base" :key="id">
-      <router-link 
+      <h2>{{value.title}}</h2>
+     
+     
+      <!-- <router-link 
         :to="{ name: 'Edit', params: id}"
       >
        <h2>
-          {{ value.taskTitle }}
+          {{ value.title }}
           <ion-icon class="trash" name="trash"
             @mouseenter="$event.target.style.color = '#999'"
             @mouseleave="$event.target.style.color = '#ddd'"
@@ -27,7 +30,7 @@
             <input v-else type="checkbox" disabled/>
           </span>
         </li>
-      </ul>
+      </ul> -->
       <br>
     </form>
   </div>
@@ -36,11 +39,9 @@
 <script>
 import AddTask from '@/components/AddTask'
 export default {
-  data() {
-    return {
-
-    }
-  },
+  data: () => ({
+    salavatLOH: true
+  }),
   components: {
     AddTask,
   },

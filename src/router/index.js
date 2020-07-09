@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Edit from '@/views/Edit'
+import List from '@/views/List'
 
 
 Vue.use(VueRouter)
@@ -9,8 +9,8 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'List',
-    // component: List
-    component: () => import(/* webpackChunkName:"listOfTasks"*/ '@/views/List')
+    component: List
+    // component: () => import(/* webpackChunkName:"listOfTasks"*/ '@/views/List')
   },
   {
     path: '/Form',
@@ -18,12 +18,12 @@ Vue.use(VueRouter)
     // component: Form
     component: () => import(/* webpackChunkName:"addNewTask"*/ '@/views/Form')
   },
-  {
-    path:'/Edit/:index',
-    name: 'Edit',
-    component: () => import(/* webpackChunkName:"editTask"*/ '@/views/Edit'),
-    props: true,
-  }
+  // {
+  //   path:'/Edit/:index',
+  //   name: 'Edit',
+  //   component: () => import(/* webpackChunkName:"editTask"*/ '@/views/Edit'),
+  //   props: true,
+  // }
 ]
 
 const router = new VueRouter({

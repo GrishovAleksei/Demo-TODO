@@ -12,7 +12,6 @@
 <script>
 import Navbar from '@/components/Navbar'
 export default {
-
   components: {
     Navbar,
   },
@@ -29,7 +28,7 @@ export default {
         icon: 'add-circle',
       }
     ],
-    base: [] || JSON.parse(localStorage.getItem("myBase")),
+    base: this.base = JSON.parse(localStorage.getItem("myBase")),
   })
 }
 </script>
