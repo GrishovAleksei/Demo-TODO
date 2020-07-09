@@ -1,7 +1,7 @@
   <template>
   <div class='form'>
     <h2>Create task</h2>
-    <form @submit.prevent="$emit('submit-handler', ob)">
+    <form @submit.prevent="$emit('submit-handler', this.title, this.todos)">
       <input type='text' placeholder="Type task" v-model='title' required>
       
       <AddTodo
@@ -22,9 +22,6 @@
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
 export default {
-  title:this.title,
-  todos:this.todo,
-  ob: {title, todos},
   data() {
     return {
       todos: [],
