@@ -1,15 +1,29 @@
 <template>
   <div class='form'>
     <!-- Input -->
-    <AddTask/>
+    <AddTask @submit-handler="submitHandler">
+    <!-- <div class='form'>
+      <h2>Create task</h2>
+      <form @submit.prevent="$emit('submit-handler', ob})">
+        <input type='text' placeholder="Type task" v-model='title' required>
+        
+        <AddTodo
+          @add-todo="addTodo" 
+        />
+        <TodoList
+          v-if="todos.length"
+          :todos="todos"
+          @remove-todo="removeTodo"
+        />
+        <p v-else>No todos.</p>
+        <input type="submit" value="Save">
+      </form>
+    </div> -->
     <br>
 
     <!-- List -->
     <form v-for="(value, id) in $parent.$data.base" :key="id">
-      <h2>{{value.title}}</h2>
-     
-     
-      <!-- <router-link 
+      <router-link 
         :to="{ name: 'Edit', params: id}"
       >
        <h2>
@@ -30,18 +44,22 @@
             <input v-else type="checkbox" disabled/>
           </span>
         </li>
-      </ul> -->
+      </ul>
       <br>
     </form>
   </div>
 </template>
 
 <script>
-import AddTask from '@/components/AddTask'
+import TodoList from '@/components/TodoList'
+import AddTodo from '@/components/AddTodo'
+// import AddTask from '@/components/AddTask'
 export default {
-  data: () => ({
-    salavatLOH: true
-  }),
+  data() {
+    return {
+
+    }
+  },
   components: {
     AddTask,
   },
@@ -50,6 +68,9 @@ export default {
       this.$parent.$data.base.splice(id, 1)
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
     },
+    submitHandler(ob) {
+      
+    }
   }
 }
 </script>

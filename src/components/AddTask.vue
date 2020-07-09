@@ -1,7 +1,7 @@
-<template>
+  <template>
   <div class='form'>
     <h2>Create task</h2>
-    <form @submit.prevent="submitHandler">
+    <form @submit.prevent="$emit('submit-handler', ob)">
       <input type='text' placeholder="Type task" v-model='title' required>
       
       <AddTodo
@@ -22,6 +22,9 @@
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
 export default {
+  title:this.title,
+  todos:this.todo,
+  ob: {title, todos},
   data() {
     return {
       todos: [],
@@ -32,27 +35,9 @@ export default {
     AddTodo
   },
   methods: {
-    submitHandler() {
-      let title = this.title,
-          todos = this.todos
-      console.log(title, "dsfgsdgf")
-      console.log(this.$parent)
-
-      console.log(todos)
-      this.$parent.$parent.$data.base.push({title,todos})
-      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
-
-      // const task = { title, todos }
-      // localStorage.setItem("myBase", JSON.stringify(task))
-
-      this.title=''
-      this.todos=[] 
-    },
-
     addTodo(todo) {
       this.todos.push(todo)
     },
-
     removeTodo(id) {
       this.todos = this.todos.filter(t => t.id !== id)
     }
