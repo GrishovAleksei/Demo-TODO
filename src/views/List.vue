@@ -24,7 +24,8 @@
     <!-- List -->
     <form v-for="(value, id) in $parent.$data.base" :key="id">
       <router-link 
-        :to="{ name: 'Edit', params: id}"
+        :to="{ name: 'Edit', params: {base: $parent.$data.base,
+                                      id: id}}"
       >
        <h2>
           {{ value.title }}
@@ -35,6 +36,7 @@
           ></ion-icon>
         </h2>
       </router-link>
+
       <ul v-for="(todo, i) in value.todos.slice(0,2)" :key="i">
         <li>
           <span type="text">
@@ -58,6 +60,7 @@ export default {
   data() {
     return {
       todos: [],
+      title: '',
     }
   },
   components: {
@@ -71,10 +74,13 @@ export default {
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
     },
     submitHandler() {
-      const title = this.title,
-            todos = this.todos
-            
-      this.$parent.$data.base.push({title, todos})
+      const title = this.title
+      const todos = this.todos
+      console.log(title, '--->')
+      console.log(todos, '--->')
+      console.log(this.$parent.$data) 
+          
+      this.$parent.$data.base.push({ title, todos })
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
       this.title=''
       this.todos=[] 

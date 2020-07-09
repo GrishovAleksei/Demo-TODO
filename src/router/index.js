@@ -18,12 +18,12 @@ Vue.use(VueRouter)
     // component: Form
     component: () => import(/* webpackChunkName:"addNewTask"*/ '@/views/Form')
   },
-  // {
-  //   path:'/Edit/:index',
-  //   name: 'Edit',
-  //   component: () => import(/* webpackChunkName:"editTask"*/ '@/views/Edit'),
-  //   props: true,
-  // }
+  {
+    path:'/Edit/:index',
+    name: 'Edit',
+    component: () => import(/* webpackChunkName:"editTask"*/ '@/views/Edit'),
+    props: true,
+  }
 ]
 
 const router = new VueRouter({

@@ -13,7 +13,10 @@
 import Navbar from '@/components/Navbar'
 export default {
   mounted() {
-    this.base = JSON.parse(localStorage.getItem("myBase"))
+    this.base=JSON.parse(localStorage.getItem("myBase"))
+    if(!this.base) {
+      this.base=[]
+    } 
   },
   components: {
     Navbar,
