@@ -1,39 +1,20 @@
 <template>
   <div class='form'>
-    <div class='form'>
-      <h2>Create task</h2>
-      <form @submit.prevent="submitHandler">
-        <input type='text' placeholder="Type task" id='title' v-model='title'  required>
-
-        <AddTodo
-          @add-todo="addTodo" 
-        />
-        
-        <TodoList
-          v-if="todos.length"
-          :todos="todos"
-          @remove-todo="removeTodo"
-        />
-        <p v-else>No todos.</p>
-        
-        <input type="submit" value="Save">
-      </form>
-    </div>
+    <!-- Input -->
+    <AddTask/>
     <br>
 
-    
-    <form v-for="(value, index) in $parent.$data.base" :key="index">
+    <!-- List -->
+    <form v-for="(value, id) in $parent.$data.base" :key="id">
       <router-link 
-        :to="{ name: 'Edit', params: { index: index, title: value.taskTitle, todos: value.todos} }"
-        :index="index"
-        
+        :to="{ name: 'Edit', params: id}"
       >
        <h2>
           {{ value.taskTitle }}
           <ion-icon class="trash" name="trash"
-          @mouseenter="$event.target.style.color = '#999'"
-          @mouseleave="$event.target.style.color = '#ddd'"
-          @click.prevent="() => deleteTask(index)"
+            @mouseenter="$event.target.style.color = '#999'"
+            @mouseleave="$event.target.style.color = '#ddd'"
+            @click.prevent="() => deleteTask(index)"
           ></ion-icon>
         </h2>
       </router-link>
@@ -53,35 +34,17 @@
 </template>
 
 <script>
-import TodoList from '@/components/TodoList'
-import AddTodo from '@/components/AddTodo'
+import AddTask from '@/components/AddTask'
 export default {
   data() {
     return {
-      todos: []
+
     }
   },
   components: {
-    TodoList,
-    AddTodo
+    AddTask,
   },
   methods: {
-    submitHandler() {
-      const taskTitle = this.title
-      const todos = this.todos
-      this.$parent.$data.base.push({ taskTitle, todos })
-      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
-      this.title=''
-      this.todos=[] 
-    },
-
-    addTodo(todo) {
-      this.todos.push(todo)
-    },
-
-    removeTodo(id) {
-      this.todos = this.todos.filter(t => t.id !== id)
-    },
     deleteTask(id) {
       this.$parent.$data.base.splice(id, 1)
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))

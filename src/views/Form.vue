@@ -24,7 +24,8 @@ import AddTodo from '@/components/AddTodo'
 export default {
   data() {
     return {
-      todos: []
+      todos: [],
+      count: 0
     }
   },
   components: {

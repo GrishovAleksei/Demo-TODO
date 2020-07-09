@@ -1,9 +1,9 @@
 <template>
   <div class='form'>
     <form >
-      <h2>{{this.$route.params.title}}</h2>
+      <h2>{{task.title}}</h2>
       
-      <ul v-for="(todo, i) in this.$route.params.todos" :key="i">
+      <ul v-for="(todo, i) in task.todos" :key="i">
         <li>
           <span type="text" :class="{done: todo.completed}">
             <strong>{{ i + 1 }}</strong>
@@ -11,17 +11,17 @@
             <input v-if="todo.completed" type="checkbox" checked/>
             <input v-else type="checkbox"/>
           </span>
-          <button @click="() => removeTodo(i)">
+          <!-- <button @click="() => removeTodo(i)">
             &times;
-          </button>
+          </button> -->
           
         </li>
         
       </ul>
       <AddTodo/>
-      <input type="submit" value="Save"
+      <!-- <input type="submit" value="Save"
         @submit="submitHandler"
-      />
+      /> -->
     </form>
   </div>
 </template>
@@ -30,13 +30,22 @@ import AddTodo from "@/components/AddTodo"
 export default {
   data() {
     return {
+      taskId: this.$route.params.id,
       todosTemp: []
     }
   },
-  // title : this.$route.params.title,
-  // todos : this.$route.params.todos,
+
+  computed: {
+    task() {
+      return parent.data.base.find(
+        myBase=> myBase.id === this.taskId
+      )
+    }
+  },
+ 
   components: {
     AddTodo,
+  
   },
   methods:{
     addTodo(todo) {

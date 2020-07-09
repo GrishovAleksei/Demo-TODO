@@ -12,19 +12,12 @@
       >
         <router-link 
           :to="link.path"
-          :style="{color: linkColor || '#ddd'}"
+          :style="{color: '#ddd'}"
         >
           {{ link.title }}
           <ion-icon :name="link.icon"></ion-icon>
         </router-link>
       </li>
-      <!-- day/night mode
-        <div class="mode" type="submit"
-        @mouseenter="$event.currentTarget.style.background = '#999'"
-        @mouseleave="$event.currentTarget.style.background = '#333'"
-      >
-        <ion-icon name="sunny" :style="{color: linkColor || '#ddd'}"></ion-icon>
-      </div> -->
     </ul>
   </nav>
 </template>
@@ -69,13 +62,6 @@ nav {
       margin-right: 10px;
       font-size: 25px;
     }
-    .mode {
-      cursor: pointer;
-      position: absolute;
-      right: 10px;
-      display: flex;
-      padding: 10px 10px;
-    }
     li {
       list-style-type: none;
       padding: 10px 20px;
@@ -103,7 +89,6 @@ nav {
         top: 8px;
         left: 0px;
       }
-
       li {
         width: 100%;
         padding-left: 0;

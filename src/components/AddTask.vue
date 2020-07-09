@@ -2,7 +2,7 @@
   <div class='form'>
     <h2>Create task</h2>
     <form @submit.prevent="submitHandler">
-      <input type='text' placeholder="Type task" id='title' v-model='title'  required>
+      <input type='text' placeholder="Type task" id='title' v-model='title' required>
       
       <AddTodo
         @add-todo="addTodo" 
@@ -24,7 +24,8 @@ import AddTodo from '@/components/AddTodo'
 export default {
   data() {
     return {
-      todos: []
+      todos: [],
+      // counter: 0,
     }
   },
   components: {
@@ -32,11 +33,20 @@ export default {
     AddTodo
   },
   methods: {
+    // increment: () => {
+    //   this.counter += 1
+    //   this.$emit('increment')
+    // },
     submitHandler() {
-      const taskTitle = this.title
-      const todos = this.todos
-      this.$parent.$data.base.push({ taskTitle, todos })
-      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
+      // this.increment
+      let taskTitle = this.title,
+          todos = this.todos
+          //const id = this.counter
+      console.log(taskTitle)
+      console.log(todos)
+      // console.log(id)
+      this.$parent.$data.base.push()
+      // localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
       
       this.title=''
       this.todos=[] 
