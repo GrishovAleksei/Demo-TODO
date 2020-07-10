@@ -72,13 +72,16 @@ export default {
       this.$parent.$data.base.splice(id, 1)
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
     },
+    save() {
+      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
+    },
     submitHandler() {
       const title = this.title
       const todos = this.todos
       this.$parent.$data.base.push({ title, todos })
-      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
       this.title=''
       this.todos=[] 
+      this.save()
     },
     addTodo(todo) {
       this.todos.push(todo)
