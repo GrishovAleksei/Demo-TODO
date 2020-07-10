@@ -2,7 +2,7 @@
   <li>
     <span :class="{done: todo.completed}" type="checkbox">
       <input type="checkbox" 
-        @change="todo.completed = !todo.completed">
+        @change="todo.checked = !todo.checked">
       <strong>{{ index + 1 }}</strong>
       {{todo.title}}
     </span>

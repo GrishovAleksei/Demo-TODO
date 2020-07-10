@@ -10,7 +10,7 @@ Vue.use(VueRouter)
     path: '/',
     name: 'List',
     // component: List
-    component: () => import(/* webpackChunkName:"listOfTasks"*/ '@/views/List'),
+    component: () => import('@/views/List'),
     props: true,
   },
   {

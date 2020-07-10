@@ -1,35 +1,25 @@
 <template>
   <div class='form'>
     <form>
-      <h2>{{ id  }}</h2>
-      <h2 contentEditable="true" v-modal="taskTitle">{{ task.title}}</h2>
-      <AddTodo 
-        @add-todo="AddTodo"
-      />
-      <ul v-for="(todo, i) in this.todosTemp" :key="i">
+      <h2 contentEditable="true" id="title">{{ task.title}}</h2>
+
+      <AddTodo @add-todo="addTodo"/>
+      
+      <ul v-for="(todo, i) in this.todosTemp" :key="i" >
         <li>
           <span type="text" :class="{done: todo.completed}">
             <strong>{{ i + 1 }}</strong>
-            <div contentEditable="true">
-              {{todo.title}}
-            </div>
-              <input v-if="todo.completed" type="checkbox" checked/>
-              <input v-else type="checkbox"/>
-            
-            
+            <a contentEditable="true" :id="i"
+              @click.prevent="()=>edited.push(i)"> {{ todo.title }} </a>
+            <input v-model="todo.checked" type="checkbox"/>
           </span>
-          <button @click="() => removeTodo(i)">
+          <button @click.prevent="() => removeTodo(todo.id)">
             &times;
           </button>
         </li>
       </ul>
-      <router-link 
-        :to="{ name: 'List', params: {title: this.taskTitle,
-                                      todos: this.todos, id: id}}"
-      >
-        <input type="submit" value="Save"
-          @submit="submitHandler"
-        />
+      <router-link :to="{ name: 'List' }">
+        <input @click="saveChanges" type="submit" value="Save"/>
       </router-link>
     </form>
   </div>
@@ -39,10 +29,12 @@ import AddTodo from "@/components/AddTodo"
 export default {
   data() {
     return {
-      // base: this.$route.params.base,
-      todosTemp: this.base[this.id].todos,
-      taskTitle: '',
+      todosTemp: this.base[this.id].todos.slice(),
+      edited: [],
     }
+  },
+  components: {
+    AddTodo,
   },
   props: {
     id: {
@@ -59,32 +51,28 @@ export default {
       return this.base[this.id]
     }
   },
- 
-  components: {
-    AddTodo,
-    
-  },
   methods:{
-    
     addTodo(todo) {
       this.todosTemp.push(todo)
     },
     removeTodo(id) {
-      this.todosTemp = this.todosTemp.filter(t => t.id !== id)
+      this.todosTemp = this.todosTemp.filter(todo => todo.id !== id)
     },
-    // submitHandler() {
-    //   const title = this.taskTitle
-    //   const todos = this.todos
-    //   router.push({ name: 'user', params: { userId: 123 }})
-    //   this.$parent.$data.base[this.id].push({ title, todos })
-    //   // localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
-    //   this.title=''
-    //   this.todos=[] 
-    // },
+    saveChanges() {
+      let title = document.getElementById("title").innerText
+      this.base[this.id].title = title
+      let noRepetition = this.edited.filter((item, pos) => {
+        return this.edited.indexOf(item) == pos;
+      })
+      
+      noRepetition.forEach(index => {
+        this.todosTemp[index].title = document.getElementById(index).innerText
+      });
+      console.log(this.todosTemp)
+      
+      this.base[this.id].todos = this.todosTemp
+    },
   },
-
-
- 
 }
 </script>
 

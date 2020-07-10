@@ -42,8 +42,7 @@
           <span type="text">
             <strong>{{ i + 1 }}</strong>
             {{todo.title}}
-            <input v-if="todo.completed" type="checkbox" checked disabled/>
-            <input v-else type="checkbox" disabled/>
+            <input v-model="todo.checked" type="checkbox" disabled/>
           </span>
         </li>
       </ul>
