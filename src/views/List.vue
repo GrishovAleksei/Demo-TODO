@@ -1,5 +1,11 @@
 <template>
+
   <div class='form'>
+    <Modal
+      v-show="visible"
+      @close="closeModal"
+      @confirm="deleteTask"
+    />
     <!-- Input -->
     <!-- <AddTask @submit-handler="submitHandler"/> -->
     <div class='form'>
@@ -26,13 +32,14 @@
       <router-link 
         :to="{ name: 'Edit', params: {base: $parent.$data.base,
                                       id: id}}"
+        @getConfirm="() => showDialog(id)"
       >
        <h2>
           {{ value.title }}
           <ion-icon class="trash" name="trash"
             @mouseenter="$event.target.style.color = '#999'"
             @mouseleave="$event.target.style.color = '#ddd'"
-            @click.prevent="() => deleteTask(id)"
+            @click.prevent="() => showDialog(id)"
           ></ion-icon>
         </h2>
       </router-link>
@@ -55,22 +62,36 @@
 // import AddTask from '@/components/AddTask'
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
+import Modal from '@/components/Modal'
+
 export default {
   data() {
     return {
       todos: [],
       title: '',
+      visible: false,
+      temp: '',
     }
   },
   components: {
     // AddTask,
     TodoList,
     AddTodo,
+    Modal
   },
   methods: {
-    deleteTask(id) {
-      this.$parent.$data.base.splice(id, 1)
-      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
+    showDialog(id) {
+      this.visible = true
+      this.temp = id
+    },
+    closeModal() {
+      this.visible = false
+    },
+    deleteTask() {
+      this.closeModal()
+      this.$parent.$data.base.splice(this.temp, 1)
+      this.save()
+      this.temp = ''
     },
     save() {
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
@@ -94,21 +115,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .choosed {
-    li {
-      margin-bottom: 5px;
-      border:1px solid #ccc;
-      display: flex;
-      justify-content: space-between;
-    }
-    .done {
-      text-decoration: line-through;
-    }
-    input {
-      margin-right: 1rem;
-      position: static; 
-    }
-  }
   ul{
     list-style-type: none;
     padding-left:10px
@@ -136,9 +142,9 @@ export default {
     font-size: 18px;
     font-weight: 100;
     padding: 15px;
-    margin: -30px -30px 0px -30px;
+    margin: -30px -30px 30px -30px;
   }
-  .form span[type="text"]
+  .form input,span[type="text"]
   {
     display: flex;
     align-items: center;
@@ -163,6 +169,24 @@ export default {
     font-size: 22px;
     margin-left: 240px;
     cursor: pointer;
+  }
+  .form input[type="submit"]{
+    margin-top:10px;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: capitalize;
+  }
+  .form input[type="submit"]:hover {
+    background:linear-gradient(to bottom, #34CACA 10%, #30C9C9 100%);
+    background-color:#34CACA;
   }
     
 </style>

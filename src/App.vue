@@ -4,8 +4,7 @@
       :nav-links='navLinks'
       :imagePath="require('@/img/logo.jpg')"
     />
-    
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
@@ -21,6 +20,7 @@ export default {
   components: {
     Navbar,
   },
+  
   data: () => ({
     navLinks: [
       {
