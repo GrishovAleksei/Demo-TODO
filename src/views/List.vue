@@ -1,5 +1,4 @@
 <template>
-
   <div class='form'>
     <Modal
       v-show="visible"
@@ -8,7 +7,7 @@
     />
     <!-- Input -->
     <!-- <AddTask @submit-handler="submitHandler"/> -->
-    <div class='form'>
+    <div class='create_form'>
       <h2>Create task</h2>
       <form @submit.prevent="submitHandler">
         <input type='text' placeholder="Type task" v-model='title' required>
@@ -36,7 +35,7 @@
       >
        <h2>
           {{ value.title }}
-          <ion-icon class="trash" name="trash"
+          <ion-icon class="icon" name="trash"
             @mouseenter="$event.target.style.color = '#999'"
             @mouseleave="$event.target.style.color = '#ddd'"
             @click.prevent="() => showDialog(id)"
@@ -46,7 +45,7 @@
 
       <ul v-for="(todo, i) in value.todos.slice(0,2)" :key="i">
         <li>
-          <span type="text">
+          <span type="text" :class="{done: todo.completed}">
             <strong>{{ i + 1 }}</strong>
             {{todo.title}}
             <input v-model="todo.checked" type="checkbox" disabled/>
@@ -57,8 +56,8 @@
     </form>
   </div>
 </template>
-<script>
 
+<script>
 // import AddTask from '@/components/AddTask'
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
@@ -115,20 +114,24 @@ export default {
 </script>
 
 <style lang="scss">
-  ul{
-    list-style-type: none;
-    padding-left:10px
-    
-  }
   .form{
-    font-family: 'Open Sans Condensed';
     width: 500px;
     padding: 30px;
     background: #FFFFFF;
     margin: 50px auto;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
-    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
-    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow:  0px 0px 20px rgba(0, 0, 0, 0.5);
+    
+    .create_form {
+      width: 440px;
+      padding: 30px;
+      background: #FFFFFF;
+      margin-bottom: 40px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+      -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+      -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.7);
+    }
   }
   .form h2{
     cursor: pointer;
@@ -137,7 +140,6 @@ export default {
     justify-content: center;
     background: #333;
     text-transform: uppercase;
-    font-family: 'Open Sans Condensed', sans-serif;
     color: #ddd;
     font-size: 18px;
     font-weight: 100;
@@ -155,38 +157,43 @@ export default {
     border: none;
     border-bottom: 1px solid #ddd;
     background: transparent;
-    padding-bottom: 0px;
-    font: 16px Arial, Helvetica, sans-serif;
-    height: 60px;
+    font-size: 16px;
+    height: 50px;
     overflow: hidden;
   }
   .form input[type="checkbox"] {
     margin-bottom: 10px;
     height: 14px;
   }
-  ion-icon.trash {
-    position:absolute;
-    font-size: 22px;
-    margin-left: 240px;
-    cursor: pointer;
-  }
+ 
   .form input[type="submit"]{
-    margin-top:10px;
+    margin-top: 15px;
     box-shadow: inset 0px 1px 0px 0px #45D6D6;
     background-color: #2CBBBB;
     border: 1px solid #27A0A0;
     display: inline-block;
     cursor: pointer;
     color: #FFFFFF;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 14px;
-    padding: 8px 18px;
+    font-size: 16px;
     text-decoration: none;
-    text-transform: capitalize;
+    text-transform: uppercase;
   }
   .form input[type="submit"]:hover {
     background:linear-gradient(to bottom, #34CACA 10%, #30C9C9 100%);
     background-color:#34CACA;
+  }
+  ul{
+    list-style-type: none;
+    padding-left:10px
+  }
+  .done {
+    text-decoration: line-through;
+  }
+  .icon {
+    position:absolute;
+    font-size: 22px;
+    margin-left: 240px;
+    cursor: pointer;
   }
     
 </style>

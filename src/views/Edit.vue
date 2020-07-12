@@ -3,15 +3,28 @@
     <Modal
       v-show="visible"
       @close="closeModal"
-      @confirm="deleteTask"
+      @confirm="modal_handler"
     />
+    <!-- <Modal
+      v-show="visible"
+      @close="closeModal"
+      @confirm="deleteTask"
+    /> -->
     <form>
       <h2 contentEditable="true" id="title">{{ this.todosTemp.title}}
-        <ion-icon class="trash" name="trash"
-          @mouseenter="$event.target.style.color = '#999'"
-          @mouseleave="$event.target.style.color = '#ddd'"
-          @click.prevent="showDialog"
-        ></ion-icon>
+        <div class="icon">
+          <ion-icon  name="trash"
+            @mouseenter="$event.target.style.color = '#999'"
+            @mouseleave="$event.target.style.color = '#ddd'"
+            @click.prevent="() => {modal_handler = deleteTask;showDialog()}"
+          ></ion-icon>
+          <ion-icon name="close-circle"
+            @mouseenter="$event.target.style.color = '#999'"
+            @mouseleave="$event.target.style.color = '#ddd'"
+            @click.prevent="() => {modal_handler = cancelEditing;showDialog()}"
+          ></ion-icon>
+        </div>
+        
       </h2>
       <!-- <input v-model="todosTemp.title"/> -->
       
@@ -19,14 +32,15 @@
       
       <ul v-for="(todo, i) in this.todosTemp.todos" :key="i" >
         <li>
-          <span type="text" :class="{done: todo.completed}">
-            <strong>{{ i+1 }}</strong>
-            <input v-model="todo.title"/>
+          <span>
             <input v-model="todo.checked" type="checkbox"/>
+            <strong>{{ i+1 }}</strong>
+            <input v-model="todo.title" :class="{done: todo.checked}"/>
+            <button @click.prevent="() => removeTodo(todo.id)">
+              &times;
+            </button>
+            
           </span>
-          <button @click.prevent="() => removeTodo(todo.id)">
-            &times;
-          </button>
         </li>
       </ul>
       <router-link :to="{ name: 'List' }">
@@ -47,6 +61,8 @@ export default {
         title: this.base[this.id].title
       },
       visible: false,
+      modal_handler: Function,
+
     }
   },
   components: {
@@ -94,11 +110,17 @@ export default {
     },
     saveToLocalStorage() {
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
-    }
+    },
+    cancelEditing() {
+      //this.closeModal()
+      this.$router.go(-1)
+    },
   },
 }
 </script>
 
 <style>
-
+  .done {
+    text-decoration: line-through;
+  }
 </style>

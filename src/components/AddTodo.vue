@@ -38,9 +38,8 @@
     display: inline-block;
     cursor: pointer;
     color: #ddd;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 12px;
-    padding: 8px 18px;
+    font-size: 14px;
+    padding: 8px 20px;
     text-decoration: none;
     text-transform: uppercase;
   }

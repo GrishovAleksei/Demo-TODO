@@ -1,6 +1,6 @@
 <template>
-  <transition name="modal-fade" ref="modal_wrapper">
-    <div class="modal-backdrop">
+  <transition name="modal-fade" >
+    <div class="modal-backdrop" ref="modal-backdrop">
       <div class="modal">
         <header class="modal-header">
           <slot name="header">
@@ -45,7 +45,7 @@ export default {
   mounted() {
     let vm = this
     document.addEventListener('click', (item)=>{
-      if(item.target === vm.$refs["modal_wrapper"]){
+      if(item.target === vm.$refs["modal-backdrop"]){
         vm.close()
       }
     })
