@@ -34,7 +34,7 @@
                                         id: id}}"
           @getConfirm="() => showDialog(id)"
         >
-        <h2>
+          <h2>
             {{ value.title }}
             <ion-icon class="icon" name="trash"
               @mouseenter="$event.target.style.color = '#999'"
@@ -44,8 +44,8 @@
           </h2>
         </router-link>
 
-        <ul v-for="(todo, i) in value.todos.slice(0,2)" :key="i">
-          <li>
+        <ul>
+          <li v-for="(todo, i) in value.todos.slice(0,2)" :key="i">
             <span type="text">
               <strong class="index">{{ i + 1 }}</strong>
               <div :class="{done: todo.checked}" class="title">
@@ -54,7 +54,10 @@
               <input v-model="todo.checked" type="checkbox" disabled/>
             </span>
           </li>
+          <li>...</li>
         </ul>
+                    
+
         <br>
       </form>
     </div>
@@ -63,7 +66,6 @@
 </template>
 
 <script>
-// import CreateTask from '@/components/CreateTask'
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
 import Modal from '@/components/Modal'
@@ -78,7 +80,6 @@ export default {
     }
   },
   components: {
-    // CreateTask,
     TodoList,
     AddTodo,
     Modal

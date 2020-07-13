@@ -6,8 +6,10 @@
       @confirm="modal_handler"
     />
     <form>
-      <h2 contentEditable="true" id="title">{{ this.todosTemp.title}}
+      <h2>
+        <input class="task" v-model="todosTemp.title"/>
         <div class="icon">
+          
           <ion-icon  name="trash"
             @mouseenter="$event.target.style.color = '#999'"
             @mouseleave="$event.target.style.color = '#ddd'"
@@ -19,11 +21,12 @@
             @click.prevent="() => {modal_handler = cancelEditing;showDialog()}"
           ></ion-icon>
         </div>
+
         
       </h2>
       <AddTodo @add-todo="addTodo"/>
       
-      <ul v-for="(todo, i) in this.todosTemp.todos" :key="i" >
+      <ul v-for="(todo, i) in todosTemp.todos" :key="i" >
         <li>
           <span>
             <input v-model="todo.checked" type="checkbox"/>
@@ -125,5 +128,19 @@ export default {
 <style>
   .done {
     text-decoration: line-through;
+  }
+  .task {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #333;
+    text-transform: uppercase;
+    color: #ddd;
+    font-size: 18px;
+    font-weight: 100;
+    padding: 15px;
+    border: none;
+    text-align: center;
   }
 </style>
