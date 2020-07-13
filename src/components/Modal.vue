@@ -1,28 +1,23 @@
 <template>
   <transition name="modal-fade" >
-    <div class="modal-backdrop" ref="modal-backdrop">
+    <div class="modal-wrapper" ref="modal-wrapper">
       <div class="modal">
         <header class="modal-header">
-          <slot name="header">
-            <h1>Are you sure?</h1>
-          </slot>
+          <h1>Are you sure?</h1>
         </header>
         <section class="modal-body">
           
-          <slot name="body">
-            
-            <button type="submit" @click="confirm">
-              Yes
-            </button>
-            <button type="submit" @click="close">
-              No
-            </button>
-         
-          </slot>
+          <button type="submit" @click="confirm" class='btn'
+            @mouseenter="$event.target.style.color = 'green'"
+            @mouseleave="$event.target.style.color = '#000'">
+            Yes
+          </button>
+          <button type="submit" @click="close" class='btn'
+            @mouseenter="$event.target.style.color = 'red'"
+            @mouseleave="$event.target.style.color = '#000'">
+            No
+          </button>
         </section>
-        <slot name="footer">
-
-        </slot>
       </div>
     </div>
   </transition>
@@ -45,7 +40,7 @@ export default {
   mounted() {
     let vm = this
     document.addEventListener('click', (item)=>{
-      if(item.target === vm.$refs["modal-backdrop"]){
+      if(item.target === vm.$refs["modal-wrapper"]){
         vm.close()
       }
     })
@@ -55,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .modal-backdrop {
+  .modal-wrapper {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -66,53 +61,33 @@ export default {
     justify-content: center;
     align-items: center;
   }
-
   .modal {
-    z-index:10;
+    z-index:1;
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
     display: flex;
     flex-direction: column;
   }
-
-  .modal-header,
-  .modal-footer {
-    padding: 15px;
-    display: flex;
-  }
-
   .modal-header {
     border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
-    justify-content: space-between;
+    color: #2CBBBB;
+    justify-content: center;
+    padding: 20px;
+    display: flex;
   }
-
-  .modal-footer {
-    border-top: 1px solid #eeeeee;
-    justify-content: flex-end;
-  }
-
   .modal-body {
     position: relative;
     padding: 20px 10px;
   }
-
-  .btn-close {
+  .btn {
     border: none;
-    font-size: 20px;
+    font-size: 15px;
     padding: 20px;
     cursor: pointer;
     font-weight: bold;
-    color: #4AAE9B;
+    color: #000;
     background: transparent;
-  }
-
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
   }
   .modal-fade-enter,
   .modal-fade-leave-active {

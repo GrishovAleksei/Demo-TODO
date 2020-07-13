@@ -5,11 +5,6 @@
       @close="closeModal"
       @confirm="modal_handler"
     />
-    <!-- <Modal
-      v-show="visible"
-      @close="closeModal"
-      @confirm="deleteTask"
-    /> -->
     <form>
       <h2 contentEditable="true" id="title">{{ this.todosTemp.title}}
         <div class="icon">
@@ -26,16 +21,14 @@
         </div>
         
       </h2>
-      <!-- <input v-model="todosTemp.title"/> -->
-      
       <AddTodo @add-todo="addTodo"/>
       
       <ul v-for="(todo, i) in this.todosTemp.todos" :key="i" >
         <li>
           <span>
             <input v-model="todo.checked" type="checkbox"/>
-            <strong>{{ i+1 }}</strong>
-            <input v-model="todo.title" :class="{done: todo.checked}"/>
+            <strong class="index">{{ i+1 }}</strong>
+            <input v-model="todo.title" :class="{done: todo.checked}" class="title"/>
             <button @click.prevent="() => removeTodo(todo.id)">
               &times;
             </button>
@@ -62,7 +55,10 @@ export default {
       },
       visible: false,
       modal_handler: Function,
-
+      // history = {
+      //   index: 0,
+      //   changes: []
+      // },
     }
   },
   components: {
@@ -93,9 +89,17 @@ export default {
     },
     addTodo(todo) {
       this.todosTemp.todos.push(todo)
+      // this.history.changes.push({
+      //   type: "add_todo"
+      // })
     },
     removeTodo(id) {
       this.todosTemp.todos = this.todosTemp.todos.filter(todo => todo.id !== id)
+      // this.history.changes.push({
+      //   type: "delete_todo",
+      //   index: id,
+      //   todo: todos[id]
+      // })
     },
     deleteTask() {
       this.$parent.$data.base.splice(this.id, 1)
@@ -112,7 +116,6 @@ export default {
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
     },
     cancelEditing() {
-      //this.closeModal()
       this.$router.go(-1)
     },
   },

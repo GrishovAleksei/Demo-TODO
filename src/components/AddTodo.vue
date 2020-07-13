@@ -30,16 +30,15 @@
 
 <style scoped lang="scss">
   button {
-    position: relative;
     margin: 10px 10px;
     box-shadow: inset 0px 1px 0px 0px #666;
     background-color: #333;
     border: 1px solid #222;
-    display: inline-block;
+    // display: inline-block;
     cursor: pointer;
     color: #ddd;
     font-size: 14px;
-    padding: 8px 20px;
+    padding: 5px 20px;
     text-decoration: none;
     text-transform: uppercase;
   }

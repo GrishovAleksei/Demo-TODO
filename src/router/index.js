@@ -14,12 +14,6 @@ Vue.use(VueRouter)
     props: true,
   },
   {
-    path: '/Form',
-    name: 'Form',
-    // component: Form
-    component: () => import(/* webpackChunkName:"addNewTask"*/ '@/views/Form')
-  },
-  {
     path:'/Edit/:id',
     name: 'Edit',
     component: () => import(/* webpackChunkName:"editTask"*/ '@/views/Edit'),

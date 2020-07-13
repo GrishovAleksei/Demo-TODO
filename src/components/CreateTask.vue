@@ -1,21 +1,21 @@
-<template>
-  <div class='form'>
-    <h2>Create task</h2>
-    <form @submit.prevent="submitHandler">
-      <input type='text' placeholder="Type task" id='title' v-model='title'  required>
-      
-      <AddTodo
-        @add-todo="addTodo" 
-      />
-      <TodoList
-        v-if="todos.length"
-        :todos="todos"
-        @remove-todo="removeTodo"
-      />
-      <p v-else>No todos.</p>
-      <input type="submit" value="Save">
-    </form>
-  </div>
+  <template>
+    <div class='create_form'>
+      <h2>Create task</h2>
+      <form @submit.prevent="submitTask">
+        <input type='text' placeholder="Type task" v-model='title' required>
+        
+        <AddTodo
+          @add-todo="addTodo" 
+        />
+        <TodoList
+          v-if="todos.length"
+          :todos="todos"
+          @remove-todo="removeTodo"
+        />
+        <p v-else>No todos.</p>
+        <input type="submit" value="Save">
+      </form>
+    </div>
 </template>
 
 <script>
@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       todos: [],
-      count: 0
     }
   },
   components: {
@@ -33,20 +32,15 @@ export default {
     AddTodo
   },
   methods: {
-    submitHandler() {
-      const taskTitle = this.title
+    submitTask() {
+      const title = this.title
       const todos = this.todos
-      this.$parent.$data.base.push({ taskTitle, todos })
-      localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
       
-      this.title=''
-      this.todos=[] 
+      this.$emit('submit-handler', title, todos)
     },
-
     addTodo(todo) {
       this.todos.push(todo)
     },
-
     removeTodo(id) {
       this.todos = this.todos.filter(t => t.id !== id)
     }

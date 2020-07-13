@@ -1,10 +1,9 @@
 <template>
   <li>
     <span>
-      <input type="checkbox" 
-        @change="todo.checked = !todo.checked">
-      <strong>{{ index + 1 }}</strong>
-      {{todo.title}}
+      <input type="checkbox" v-model="todo.checked">
+      <strong class="index">{{ index + 1 }}</strong>
+      <div class="title" :class="{done: todo.checked}">{{todo.title}}</div>
       <button 
         @click="$emit('remove-todo', todo.id)"
       >
@@ -26,12 +25,24 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
   button {
+    margin: auto;
     height: 25px;
   }
-  // .done {
-  //   text-decoration: line-through;
-  // }
-
+  .index{
+    margin: auto;
+  }
+  .title {
+    display: flex;
+    align-items: center;
+    width: 370px;
+    font-size: 14px;
+    height: 40px;
+    overflow: hidden;
+    border: none;
+  }
+  .done {
+    text-decoration: line-through;
+  }
 </style>

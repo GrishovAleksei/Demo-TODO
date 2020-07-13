@@ -6,7 +6,7 @@
       @confirm="deleteTask"
     />
     <!-- Input -->
-    <!-- <AddTask @submit-handler="submitHandler"/> -->
+    <!-- <CreateTask @submit-handler="submitHandler"/> -->
     <div class='create_form'>
       <h2>Create task</h2>
       <form @submit.prevent="submitHandler">
@@ -27,38 +27,43 @@
     <br>
 
     <!-- List -->
-    <form v-for="(value, id) in $parent.$data.base" :key="id">
-      <router-link 
-        :to="{ name: 'Edit', params: {base: $parent.$data.base,
-                                      id: id}}"
-        @getConfirm="() => showDialog(id)"
-      >
-       <h2>
-          {{ value.title }}
-          <ion-icon class="icon" name="trash"
-            @mouseenter="$event.target.style.color = '#999'"
-            @mouseleave="$event.target.style.color = '#ddd'"
-            @click.prevent="() => showDialog(id)"
-          ></ion-icon>
-        </h2>
-      </router-link>
+    <div v-if="$parent.$data.base.length">
+      <form class="list_form" v-for="(value, id) in $parent.$data.base" :key="id">
+        <router-link 
+          :to="{ name: 'Edit', params: {base: $parent.$data.base,
+                                        id: id}}"
+          @getConfirm="() => showDialog(id)"
+        >
+        <h2>
+            {{ value.title }}
+            <ion-icon class="icon" name="trash"
+              @mouseenter="$event.target.style.color = '#999'"
+              @mouseleave="$event.target.style.color = '#ddd'"
+              @click.prevent="() => showDialog(id)"
+            ></ion-icon>
+          </h2>
+        </router-link>
 
-      <ul v-for="(todo, i) in value.todos.slice(0,2)" :key="i">
-        <li>
-          <span type="text" :class="{done: todo.completed}">
-            <strong>{{ i + 1 }}</strong>
-            {{todo.title}}
-            <input v-model="todo.checked" type="checkbox" disabled/>
-          </span>
-        </li>
-      </ul>
-      <br>
-    </form>
+        <ul v-for="(todo, i) in value.todos.slice(0,2)" :key="i">
+          <li>
+            <span type="text">
+              <strong class="index">{{ i + 1 }}</strong>
+              <div :class="{done: todo.checked}" class="title">
+                {{todo.title}}
+              </div>
+              <input v-model="todo.checked" type="checkbox" disabled/>
+            </span>
+          </li>
+        </ul>
+        <br>
+      </form>
+    </div>
+    <p v-else>You have no tasks!</p>
   </div>
 </template>
 
 <script>
-// import AddTask from '@/components/AddTask'
+// import CreateTask from '@/components/CreateTask'
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
 import Modal from '@/components/Modal'
@@ -73,7 +78,7 @@ export default {
     }
   },
   components: {
-    // AddTask,
+    // CreateTask,
     TodoList,
     AddTodo,
     Modal
@@ -114,6 +119,12 @@ export default {
 </script>
 
 <style lang="scss">
+  .icon {
+    position:absolute;
+    font-size: 22px;
+    margin-left: 240px;
+    cursor: pointer;
+  }
   .form{
     width: 500px;
     padding: 30px;
@@ -126,11 +137,13 @@ export default {
     .create_form {
       width: 440px;
       padding: 30px;
-      background: #FFFFFF;
       margin-bottom: 40px;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
       -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
       -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.7);
+    }
+    .list_form {
+      height: 210px;
     }
   }
   .form h2{
@@ -146,11 +159,11 @@ export default {
     padding: 15px;
     margin: -30px -30px 30px -30px;
   }
-  .form input,span[type="text"]
+  input[type="text"]
   {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     box-sizing: border-box;
     outline: none;
     width: 100%;
@@ -161,13 +174,21 @@ export default {
     height: 50px;
     overflow: hidden;
   }
-  .form input[type="checkbox"] {
-    margin-bottom: 10px;
-    height: 14px;
+  span{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
   }
- 
+  input[type="checkbox"] {
+    margin: auto;
+  }
   .form input[type="submit"]{
-    margin-top: 15px;
+    width: 100%;
+    margin-top: 10px;
+    height: 50px;
     box-shadow: inset 0px 1px 0px 0px #45D6D6;
     background-color: #2CBBBB;
     border: 1px solid #27A0A0;
@@ -182,18 +203,10 @@ export default {
     background:linear-gradient(to bottom, #34CACA 10%, #30C9C9 100%);
     background-color:#34CACA;
   }
-  ul{
-    list-style-type: none;
-    padding-left:10px
-  }
   .done {
     text-decoration: line-through;
   }
-  .icon {
-    position:absolute;
-    font-size: 22px;
-    margin-left: 240px;
-    cursor: pointer;
-  }
+   
+  
     
 </style>
