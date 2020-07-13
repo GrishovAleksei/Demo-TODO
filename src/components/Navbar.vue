@@ -43,11 +43,6 @@ nav {
     display: flex;
     height: 100%;
     align-items: center;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
-    box-shadow: 2px 2px 2px #CCC;
-
     figure {
       cursor: pointer;
       margin-right: 10px;
@@ -70,14 +65,16 @@ nav {
 }
 @media screen and (max-width: 759px) {
   nav {
-    background: #333;
+    background: white;
+    position: static;
     ul {
-      position: absolute;
+      position: fixed;
       width: 150px;
       flex-direction: column;
       left: -99px;
       transition: 300ms ease all;
-      top: 60px;
+      padding-top: 120px;
+      margin-top: -60px;
 
       &.active {
         left: 0px;

@@ -5,28 +5,8 @@
       @close="closeModal"
       @confirm="deleteTask"
     />
-    <!-- Input -->
-    <!-- <CreateTask @submit-handler="submitHandler"/> -->
-    <div class='create_form'>
-      <h2>Create task</h2>
-      <form @submit.prevent="submitHandler">
-        <input type='text' placeholder="Type task" v-model='title' required>
-        
-        <AddTodo
-          @add-todo="addTodo" 
-        />
-        <TodoList
-          v-if="todos.length"
-          :todos="todos"
-          @remove-todo="removeTodo"
-        />
-        <p v-else>No todos.</p>
-        <input type="submit" value="Save">
-      </form>
-    </div>
+    <CreateTask @submit-handler="submitHandler"/>
     <br>
-
-    <!-- List -->
     <div v-if="$parent.$data.base.length">
       <form class="list_form" v-for="(value, id) in $parent.$data.base" :key="id">
         <router-link 
@@ -54,10 +34,8 @@
               <input v-model="todo.checked" type="checkbox" disabled/>
             </span>
           </li>
-          <li>...</li>
+          <li v-if="(value.todos.length>2)">...</li>
         </ul>
-                    
-
         <br>
       </form>
     </div>
@@ -66,9 +44,8 @@
 </template>
 
 <script>
-import TodoList from '@/components/TodoList'
-import AddTodo from '@/components/AddTodo'
 import Modal from '@/components/Modal'
+import CreateTask from '@/components/CreateTask'
 
 export default {
   data() {
@@ -80,9 +57,8 @@ export default {
     }
   },
   components: {
-    TodoList,
-    AddTodo,
-    Modal
+    Modal,
+    CreateTask
   },
   methods: {
     showDialog(id) {
@@ -101,12 +77,10 @@ export default {
     save() {
       localStorage.setItem("myBase", JSON.stringify(this.$parent.$data.base))
     },
-    submitHandler() {
-      const title = this.title
-      const todos = this.todos
+    submitHandler(title, todos) {
+      // const title = this.title
+      // const todos = this.todos
       this.$parent.$data.base.push({ title, todos })
-      this.title=''
-      this.todos=[] 
       this.save()
     },
     addTodo(todo) {
@@ -129,8 +103,10 @@ export default {
   .form{
     width: 500px;
     padding: 30px;
+    padding-bottom: 0px;
     background: #FFFFFF;
-    margin: 50px auto;
+    margin: 20px auto;
+    
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow:  0px 0px 20px rgba(0, 0, 0, 0.5);
@@ -144,7 +120,7 @@ export default {
       -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.7);
     }
     .list_form {
-      height: 210px;
+      height: 220px;
     }
   }
   .form h2{

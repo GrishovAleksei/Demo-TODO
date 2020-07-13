@@ -1,6 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <input class="input-text" type="text" placeholder="Type todo" v-model="title">
+    <input class="input-text" type="text" placeholder="Type todo"
+      v-model="title" ref="addTitle">
     <button type="submit">Add</button>
   </form>
 </template>

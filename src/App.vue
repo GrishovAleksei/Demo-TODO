@@ -28,11 +28,6 @@ export default {
         title: 'Tasks',
         icon: "list-circle",
       },
-      {
-        path: '/Form',
-        title: 'Add',
-        icon: 'add-circle',
-      }
     ],
     base: [],
   })
