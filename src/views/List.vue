@@ -103,7 +103,6 @@ export default {
   .form{
     width: 500px;
     padding: 30px;
-    padding-bottom: 0px;
     background: #FFFFFF;
     margin: 20px auto;
     
